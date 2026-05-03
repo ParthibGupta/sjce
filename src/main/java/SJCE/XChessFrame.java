@@ -171,6 +171,7 @@ public class XChessFrame extends JFrame implements IChessContext, IMainFrameCons
     }
     
     public void newGame(int agent1, int agent2) {
+        SJCE.more.Actions.logMarkovState("S1_UNINITIALIZED");
         //boardUI.setVisible(true);
         //aktion.deleteLogFile ("log/Bagatur.log");
         aktion.enemyTip="";

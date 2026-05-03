@@ -264,6 +264,7 @@ public abstract class EngineAgent extends Agent {
     }
     
     public void runEngineIO(String cmd) {
+        SJCE.more.Actions.logMarkovState("S3_CALCULATING");
         if (this.colorCE.equals("white")) { 
            System.out.println("========================= START ENGINE ============================="); 
            this.engineIOwhite = new EngineIO(cmd);
@@ -353,6 +354,7 @@ public abstract class EngineAgent extends Agent {
     public void setName(String name)   { this.name = name;   }
     
     public void initiate() {
+        SJCE.more.Actions.logMarkovState("S2_IDLE_WAITING");
         parseThread = new Thread() {
             @Override
             public void run() {
@@ -399,8 +401,10 @@ public abstract class EngineAgent extends Agent {
          }
         aktion.enginePromotionType="";
         if (this.ceTip.equals("uci")) {
-            if (line.contains("bestmove")) 
+            if (line.contains("bestmove")) {
+                SJCE.more.Actions.logMarkovState("S4_MOVE_READY");
                 line=line.replaceAll("bestmove","move");
+            }
             if (line.contains("move") && line.contains("ponder")) { 
                 String[] bf = line.trim().split("\\s+");
                 line=bf[0] + " " + bf[1];
@@ -468,6 +472,12 @@ public abstract class EngineAgent extends Agent {
     
     public void writeLine(String string) {
         frame.outputArea.append("<write to "+colorCE.toUpperCase()+">: "+string+"\n");
+        if (string.startsWith("go ")) {
+            SJCE.more.Actions.logMarkovState("S3_CALCULATING");
+        }
+        else if (string.equals("go")) {
+             SJCE.more.Actions.logMarkovState("S3_CALCULATING");
+        }
         fireDataEntered(new EngineEvent(this, string));
         if (this.colorCE.equals("white")) 
          {
@@ -535,6 +545,7 @@ public abstract class EngineAgent extends Agent {
     
     @Override
     public void dispose() {
+        SJCE.more.Actions.logMarkovState("S5_TERMINATED");
         super.dispose();
         parseThread = null;
         quitEngine();

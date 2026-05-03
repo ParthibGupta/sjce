@@ -78,6 +78,16 @@ public class Actions {
     public static String currentMute = "false";
     public static int currentMixer = 100;
     public static String useSound = "true";
+
+    public static String markovSessionId = "Session_" + System.currentTimeMillis();
+    public static void logMarkovState(String state) {
+        try {
+            java.io.FileWriter fw = new java.io.FileWriter("markov_states.log", true);
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+            fw.write(sdf.format(new java.util.Date()) + " | " + markovSessionId + " | " + state + "\n");
+            fw.close();
+        } catch (Exception e) {}
+    }
     public static int promotionCount = 0;
     public static Move whiteLastMove = null;
     public static Move blackLastMove = null;

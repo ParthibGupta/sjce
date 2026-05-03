@@ -120,7 +120,7 @@ public class Move {
  private int enPassant(int[] board) {
   if(!PiecesUI.isPiece(PiecesUI.PAWN, piece)) return BoardUI.NO_SQUARE;
   int distance = Math.abs(BoardUI.getFileDistance(destination, source));
-if(distance != 1 || board[destination] != PiecesUI.NO_PIECE) return BoardUI.NO_SQUARE;
+if(distance != 1 || captured != PiecesUI.NO_PIECE) return BoardUI.NO_SQUARE;
   return BoardUI.getSquare(BoardUI.getFile(destination), BoardUI.getRank(source));
  }
 }
